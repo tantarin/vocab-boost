@@ -38,18 +38,32 @@ const phrases = [
   { phrase:'Меркантильный интерес', type:'оценочное выражение', level:'C1', meaning:'Меркантильный — корыстный, расчётливый, ориентированный прежде всего на материальную выгоду.', example:'«За его участием стоял не энтузиазм, а меркантильный интерес».' }
 ];
 
-let index = Number(localStorage.getItem('phrase-index') || 0) % phrases.length;
 let learned = JSON.parse(localStorage.getItem('phrase-learned') || '[]');
+let activePhrases = phrases.filter(item => !learned.some(saved => saved.phrase === item.phrase));
+let index = activePhrases.length ? Number(localStorage.getItem('phrase-index') || 0) % activePhrases.length : 0;
 const $ = id => document.getElementById(id);
 
 function renderPhrase() {
-  const item = phrases[index];
+  const item = activePhrases[index];
+  if (!item) {
+    $('wordLevel').textContent = '✓';
+    $('wordPart').textContent = 'всё готово';
+    $('wordTitle').textContent = 'Все фразы запомнены';
+    $('wordMeaning').textContent = 'Изученные выражения остались в твоей коллекции.';
+    $('wordExample').textContent = 'Новые карточки появятся здесь после следующего обновления.';
+    $('wordCard').classList.add('revealed', 'complete');
+    $('revealButton').hidden = true;
+    $('knowButton').hidden = true;
+    return;
+  }
   $('wordLevel').textContent = item.level;
   $('wordPart').textContent = item.type;
   $('wordTitle').textContent = item.phrase;
   $('wordMeaning').textContent = item.meaning;
   $('wordExample').textContent = item.example;
-  $('wordCard').classList.remove('revealed');
+  $('wordCard').classList.remove('revealed', 'complete');
+  $('revealButton').hidden = false;
+  $('knowButton').hidden = false;
 }
 
 function renderProgress() {
@@ -62,29 +76,44 @@ function renderProgress() {
 }
 
 function nextPhrase() {
-  index = (index + 1) % phrases.length;
+  if (!activePhrases.length) return;
+  $('wordCard').classList.add('swiping');
+  index = (index + 1) % activePhrases.length;
   localStorage.setItem('phrase-index', index);
-  renderPhrase();
+  window.setTimeout(() => {
+    renderPhrase();
+    $('wordCard').classList.remove('swiping');
+  }, 140);
 }
 
 $('wordCard').addEventListener('click', () => $('wordCard').classList.add('revealed'));
 $('revealButton').addEventListener('click', event => { event.stopPropagation(); $('wordCard').classList.add('revealed'); });
-$('skipButton').addEventListener('click', nextPhrase);
 $('knowButton').addEventListener('click', () => {
-  const item = phrases[index];
+  const item = activePhrases[index];
+  if (!item) return;
   if (!learned.some(saved => saved.phrase === item.phrase)) learned.push(item);
   localStorage.setItem('phrase-learned', JSON.stringify(learned));
+  activePhrases.splice(index, 1);
+  if (index >= activePhrases.length) index = 0;
+  localStorage.setItem('phrase-index', index);
   renderProgress();
-  nextPhrase();
+  renderPhrase();
 });
 $('soundButton').addEventListener('click', event => {
   event.stopPropagation();
   if ('speechSynthesis' in window) {
     speechSynthesis.cancel();
-    const speech = new SpeechSynthesisUtterance(phrases[index].phrase);
+    if (!activePhrases[index]) return;
+    const speech = new SpeechSynthesisUtterance(activePhrases[index].phrase);
     speech.lang = 'ru-RU';
     speechSynthesis.speak(speech);
   }
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key !== 'ArrowRight' || !$('learn').classList.contains('active')) return;
+  event.preventDefault();
+  nextPhrase();
 });
 
 document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
