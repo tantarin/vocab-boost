@@ -35,11 +35,35 @@ const phrases = [
   { phrase:'Мой визави', type:'книжное выражение', level:'C1', meaning:'Визави — собеседник или человек, находящийся напротив.', example:'«Мой визави внимательно выслушал предложение и задал два вопроса».' },
   { phrase:'Полезный контент', type:'медиавыражение', level:'B1', meaning:'Контент — информационное наполнение сайта, приложения или другого медиаресурса.', example:'«Авторы регулярно публикуют полезный образовательный контент».' },
   { phrase:'Нелегитимное решение', type:'юридическое выражение', level:'C1', meaning:'Нелегитимный — не признанный законным или не обладающий законными основаниями.', example:'«Участники сочли это решение нелегитимным и потребовали пересмотра».' },
-  { phrase:'Меркантильный интерес', type:'оценочное выражение', level:'C1', meaning:'Меркантильный — корыстный, расчётливый, ориентированный прежде всего на материальную выгоду.', example:'«За его участием стоял не энтузиазм, а меркантильный интерес».' }
+  { phrase:'Меркантильный интерес', type:'оценочное выражение', level:'C1', meaning:'Меркантильный — корыстный, расчётливый, ориентированный прежде всего на материальную выгоду.', example:'«За его участием стоял не энтузиазм, а меркантильный интерес».' },
+  { phrase:'Я сегодня corporate girl', type:'зумерский офисный сленг', level:'офис', category:'office', meaning:'Ироничный способ романтизировать свой рабочий день: стильный образ, кофе, ноутбук, созвоны и ощущение деловой героини.', example:'«Надела жакет, взяла айс-латте — всё, я сегодня corporate girl».' },
+  { phrase:'Тебе повезло: ты работаешь в офисе', type:'музыкальная отсылка', level:'мем', category:'office', meaning:'Ироничная отсылка к песне группы «Ленинград» об офисной жизни и её внешнем благополучии.', example:'«Опять кондиционер, пропуск и турникет — тебе повезло: ты работаешь в офисе».' },
+  { phrase:'Ушла в режим офисной сирены', type:'модная фраза', level:'вайб', category:'office', meaning:'Office siren — эстетика эффектного корпоративного образа с приталенной одеждой, строгими деталями и очками.', example:'«Сегодня важная встреча, поэтому я ушла в режим офисной сирены».' },
+  { phrase:'Закину инвайт в календарь', type:'офисный сленг', level:'офис', category:'office', meaning:'Отправлю приглашение на встречу через рабочий календарь.', example:'«Если всем удобно в три, я закину инвайт в календарь».' },
+  { phrase:'Давайте засинкаемся', type:'офисный сленг', level:'офис', category:'office', meaning:'Давайте коротко сверим информацию, ожидания и текущее состояние работы.', example:'«Предлагаю засинкаться после обеда и решить, что берём в работу».' },
+  { phrase:'Обсудим это на дейлике', type:'офисный сленг', level:'офис', category:'office', meaning:'Вернёмся к вопросу на короткой ежедневной встрече команды.', example:'«Сейчас не будем уходить в детали — обсудим это на дейлике».' },
+  { phrase:'Возьму эту таску на себя', type:'офисный сленг', level:'офис', category:'office', meaning:'Я беру ответственность за выполнение этой задачи.', example:'«Возьму эту таску на себя и вернусь с результатом в пятницу».' },
+  { phrase:'Это не в моём фокусе', type:'корпоративная фраза', level:'границы', category:'office', meaning:'Вежливый способ обозначить, что задача сейчас не относится к твоим приоритетам.', example:'«В этом квартале это не в моём фокусе, но могу подсказать нужного человека».' },
+  { phrase:'Давайте припаркуем этот вопрос', type:'корпоративная фраза', level:'офис', category:'office', meaning:'Предложение временно отложить тему и вернуться к ней позже.', example:'«Мы уходим от повестки — давайте припаркуем этот вопрос».' },
+  { phrase:'Вернусь с апдейтом', type:'офисный сленг', level:'офис', category:'office', meaning:'Позже сообщу свежую информацию о состоянии задачи.', example:'«Уточню сроки у команды и вернусь с апдейтом до конца дня».' },
+  { phrase:'Нужен быстрый созвон', type:'рабочая фраза', level:'офис', category:'office', meaning:'Вопрос проще и быстрее решить голосом, чем продолжать переписку.', example:'«Кажется, мы по-разному поняли задачу — нужен быстрый созвон».' },
+  { phrase:'Можно без митинга?', type:'зумерская офисная фраза', level:'мем', category:'office', meaning:'Ироничная просьба не назначать встречу, если вопрос можно решить одним сообщением.', example:'«Если ответ помещается в два предложения, можно без митинга?».' },
+  { phrase:'Этот созвон мог быть письмом', type:'офисный мем', level:'мем', category:'office', meaning:'Так говорят о встрече, которая оказалась лишней и не требовала общего звонка.', example:'«Сорок минут слушали один статус — этот созвон мог быть письмом».' },
+  { phrase:'Мой work-life balance вышел из чата', type:'офисный мем', level:'мем', category:'office', meaning:'Ироничное признание, что работа начала занимать слишком много личного времени.', example:'«Третий вечер с ноутбуком — мой work-life balance вышел из чата».' },
+  { phrase:'Это мой корпоративный лор', type:'зумерский сленг', level:'мем', category:'office', meaning:'Личная история или внутренний сюжет, понятный коллегам и ставший частью офисной репутации.', example:'«Как я однажды отправила черновик директору — это мой корпоративный лор».' },
+  { phrase:'У меня сегодня ноль ресурса', type:'зумерская фраза', level:'границы', category:'office', meaning:'Честный способ сказать, что сейчас мало энергии и возможностей брать дополнительную нагрузку.', example:'«У меня сегодня ноль ресурса на ещё один необязательный созвон».' },
+  { phrase:'Я не вывожу этот дедлайн', type:'рабочая фраза', level:'границы', category:'office', meaning:'Прямое сообщение о том, что закончить работу в установленный срок не получается.', example:'«Я не вывожу этот дедлайн без помощи или пересмотра объёма задачи».' },
+  { phrase:'Поставим реалистичный дедлайн', type:'рабочая фраза', level:'границы', category:'office', meaning:'Предложение договориться о сроке, который учитывает настоящий объём работы и доступные силы.', example:'«Давайте оценим зависимости и поставим реалистичный дедлайн».' },
+  { phrase:'Не хочу быть героем переработок', type:'зумерская офисная фраза', level:'границы', category:'office', meaning:'Отказ считать постоянную сверхурочную работу признаком успеха или преданности компании.', example:'«Я закончу завтра: не хочу быть героем переработок».' },
+  { phrase:'Пойду подумаю об увольнении у кофемашины', type:'офисный мем', level:'мем', category:'office', meaning:'Шутливая реакция на неприятную задачу, встречу или внезапную рабочую проблему.', example:'«После третьего срочного комментария пойду подумаю об увольнении у кофемашины».' },
+  { phrase:'Главное — создать видимость бурной деятельности', type:'офисная ирония', level:'мем', category:'office', meaning:'Шутка о ситуации, когда внешние признаки занятости ценятся выше реального результата.', example:'«Открыла пять таблиц: главное — создать видимость бурной деятельности».' },
+  { phrase:'Я в своей эре карьерного роста', type:'зумерская фраза', level:'вайб', category:'office', meaning:'Ироничное, но мотивирующее описание периода, когда человек особенно сосредоточен на карьере.', example:'«Записалась на курс и попросила повышение — я в своей эре карьерного роста».' }
 ];
 
 let learned = JSON.parse(localStorage.getItem('phrase-learned') || '[]');
-let activePhrases = phrases.filter(item => !learned.some(saved => saved.phrase === item.phrase));
+let selectedTopic = localStorage.getItem('phrase-topic') || 'office';
+const inTopic = item => selectedTopic === 'office' ? item.category === 'office' : item.category !== 'office';
+let activePhrases = phrases.filter(item => inTopic(item) && !learned.some(saved => saved.phrase === item.phrase));
 let index = activePhrases.length ? Number(localStorage.getItem('phrase-index') || 0) % activePhrases.length : 0;
 const $ = id => document.getElementById(id);
 
@@ -67,8 +91,11 @@ function renderPhrase() {
 }
 
 function renderProgress() {
-  $('learnedCount').textContent = learned.length;
-  $('progressBar').style.width = `${Math.min(learned.length / 5 * 100, 100)}%`;
+  const topicPhrases = phrases.filter(inTopic);
+  const topicLearned = topicPhrases.filter(item => learned.some(saved => saved.phrase === item.phrase)).length;
+  $('learnedCount').textContent = topicLearned;
+  $('dailyGoal').textContent = topicPhrases.length;
+  $('progressBar').style.width = `${topicPhrases.length ? topicLearned / topicPhrases.length * 100 : 0}%`;
   $('collectionCount').textContent = learned.length;
   $('wordList').innerHTML = learned.length
     ? learned.map(item => `<article><h3>${item.phrase}</h3><p>${item.meaning}</p></article>`).join('')
@@ -122,6 +149,17 @@ document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', (
   $(tab.dataset.screen).classList.add('active');
 }));
 
+document.querySelectorAll('.topic').forEach(button => button.addEventListener('click', () => {
+  selectedTopic = button.dataset.topic;
+  localStorage.setItem('phrase-topic', selectedTopic);
+  document.querySelectorAll('.topic').forEach(topic => topic.classList.toggle('active', topic === button));
+  activePhrases = phrases.filter(item => inTopic(item) && !learned.some(saved => saved.phrase === item.phrase));
+  index = 0;
+  localStorage.setItem('phrase-index', index);
+  renderProgress();
+  renderPhrase();
+}));
+
 const options = ['Учитывать больше обстоятельств','Сосредоточиться на мелочах','Не менять своего мнения'];
 $('quizOptions').innerHTML = options.map(option => `<button class="quiz-option">${option}</button>`).join('');
 document.querySelectorAll('.quiz-option').forEach(button => button.addEventListener('click', () => {
@@ -132,6 +170,7 @@ document.querySelectorAll('.quiz-option').forEach(button => button.addEventListe
   $('quizFeedback').textContent = isCorrect ? 'Верно! Именно так.' : 'Почти. Правильный смысл подсвечен.';
 }));
 
+document.querySelectorAll('.topic').forEach(topic => topic.classList.toggle('active', topic.dataset.topic === selectedTopic));
 renderPhrase();
 renderProgress();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');

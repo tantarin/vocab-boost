@@ -12,6 +12,10 @@ h1,h2,p { margin-top:0; } h1 { margin-bottom:0; font-family:Georgia,serif; font-
 .progress-copy { font-size:13px; }.progress-copy strong { font-size:14px; }
 .progress-track { height:7px; margin-top:12px; overflow:hidden; border-radius:10px; background:#ded5c8; }
 .progress-bar { width:0; height:100%; border-radius:inherit; background:var(--green); transition:width .35s ease; }
+.topics { display:flex; gap:8px; margin:0 0 14px; overflow-x:auto; scrollbar-width:none; }
+.topics::-webkit-scrollbar { display:none; }
+.topic { flex:0 0 auto; border:1px solid var(--line); padding:10px 13px; border-radius:99px; background:transparent; font-size:12px; font-weight:800; }
+.topic.active { border-color:var(--green); background:#e3ebe3; color:#35513c; }
 .tabs { display:grid; grid-template-columns:repeat(3,1fr); padding:4px; margin-bottom:18px; border:1px solid var(--line); border-radius:14px; }
 .tab { border:0; padding:10px 4px; border-radius:10px; background:transparent; font-size:13px; font-weight:700; }
 .tab.active { background:var(--ink); color:white; }
