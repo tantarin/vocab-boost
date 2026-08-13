@@ -102,18 +102,46 @@ function renderProgress() {
     : '<p class="empty">Здесь появятся фразы, которые ты запомнил.</p>';
 }
 
-function nextPhrase() {
+function nextPhrase(direction = 'right') {
   if (!activePhrases.length) return;
-  $('wordCard').classList.add('swiping');
+  $('wordCard').classList.add(direction === 'left' ? 'swiping-left' : 'swiping-right');
   index = (index + 1) % activePhrases.length;
   localStorage.setItem('phrase-index', index);
   window.setTimeout(() => {
     renderPhrase();
-    $('wordCard').classList.remove('swiping');
+    $('wordCard').classList.remove('swiping-left', 'swiping-right');
   }, 140);
 }
 
-$('wordCard').addEventListener('click', () => $('wordCard').classList.add('revealed'));
+let touchStart = null;
+let suppressCardClick = false;
+
+$('wordCard').addEventListener('touchstart', event => {
+  if (event.touches.length !== 1) return;
+  const touch = event.touches[0];
+  touchStart = { x: touch.clientX, y: touch.clientY };
+  suppressCardClick = false;
+}, { passive: true });
+
+$('wordCard').addEventListener('touchend', event => {
+  if (!touchStart || event.changedTouches.length !== 1) return;
+  const touch = event.changedTouches[0];
+  const deltaX = touch.clientX - touchStart.x;
+  const deltaY = touch.clientY - touchStart.y;
+  touchStart = null;
+  if (Math.abs(deltaX) < 55 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+  suppressCardClick = true;
+  nextPhrase(deltaX < 0 ? 'left' : 'right');
+}, { passive: true });
+
+$('wordCard').addEventListener('touchcancel', () => { touchStart = null; });
+$('wordCard').addEventListener('click', () => {
+  if (suppressCardClick) {
+    suppressCardClick = false;
+    return;
+  }
+  $('wordCard').classList.add('revealed');
+});
 $('revealButton').addEventListener('click', event => { event.stopPropagation(); $('wordCard').classList.add('revealed'); });
 $('knowButton').addEventListener('click', () => {
   const item = activePhrases[index];
@@ -140,7 +168,7 @@ $('soundButton').addEventListener('click', event => {
 document.addEventListener('keydown', event => {
   if (event.key !== 'ArrowRight' || !$('learn').classList.contains('active')) return;
   event.preventDefault();
-  nextPhrase();
+  nextPhrase('right');
 });
 
 document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
