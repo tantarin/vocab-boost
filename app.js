@@ -1,48 +1,78 @@
-const words = [
-  { word:'Самобытный', part:'прилагательное', level:'B2', meaning:'Своеобразный, идущий своим путём, не похожий на других.', example:'«У режиссёра самобытный взгляд на знакомые истории».' },
-  { word:'Лаконичный', part:'прилагательное', level:'B1', meaning:'Краткий, ясный и выразительный.', example:'«Она дала лаконичный, но исчерпывающий ответ».' },
-  { word:'Щепетильный', part:'прилагательное', level:'C1', meaning:'Строго и принципиально относящийся к тонкостям поведения.', example:'«Он щепетилен в вопросах профессиональной этики».' },
-  { word:'Предвосхитить', part:'глагол', level:'C1', meaning:'Заранее угадать или сделать раньше ожидаемого.', example:'«Эта идея предвосхитила своё время».' },
-  { word:'Иносказательный', part:'прилагательное', level:'C1', meaning:'Выражающий мысль не прямо, а через образ или намёк.', example:'«Притча имеет иносказательный смысл».' }
+const phrases = [
+  { phrase:'Не откладывать в долгий ящик', type:'устойчивое выражение', level:'B1', meaning:'Не затягивать дело и взяться за него в ближайшее время.', example:'«Давай не будем откладывать разговор в долгий ящик и обсудим всё сегодня».' },
+  { phrase:'Смотреть на вещи шире', type:'разговорная фраза', level:'B1', meaning:'Учитывать больше обстоятельств и не ограничиваться одним взглядом.', example:'«Попробуй посмотреть на вещи шире: эта перемена открывает новые возможности».' },
+  { phrase:'Оставляет желать лучшего', type:'оценочное выражение', level:'B2', meaning:'Мягкий способ сказать, что качество чего-либо недостаточно хорошее.', example:'«Организация встречи оставляет желать лучшего, но сама идея отличная».' },
+  { phrase:'Задать верное направление', type:'деловая фраза', level:'B2', meaning:'Определить полезный ориентир для дальнейших действий или размышлений.', example:'«Первый вопрос задал верное направление всей дискуссии».' },
+  { phrase:'Найти точки соприкосновения', type:'устойчивое выражение', level:'C1', meaning:'Обнаружить общие интересы, взгляды или основания для договорённости.', example:'«Несмотря на разногласия, командам удалось найти точки соприкосновения».' },
+  { phrase:'Внести ясность в вопрос', type:'деловая фраза', level:'B2', meaning:'Устранить неопределённость и сделать ситуацию понятнее.', example:'«Новые данные помогли внести ясность в вопрос о сроках запуска».' },
+  { phrase:'Идти вразрез с ожиданиями', type:'книжное выражение', level:'C1', meaning:'Противоречить тому, чего ожидали окружающие или что считалось вероятным.', example:'«Результаты исследования идут вразрез с нашими первоначальными ожиданиями».' }
 ];
 
-let index = Number(localStorage.getItem('vocab-index') || 0) % words.length;
-let learned = JSON.parse(localStorage.getItem('vocab-learned') || '[]');
+let index = Number(localStorage.getItem('phrase-index') || 0) % phrases.length;
+let learned = JSON.parse(localStorage.getItem('phrase-learned') || '[]');
 const $ = id => document.getElementById(id);
 
-function renderWord() {
-  const item = words[index];
-  $('wordLevel').textContent = item.level; $('wordPart').textContent = item.part;
-  $('wordTitle').textContent = item.word; $('wordMeaning').textContent = item.meaning;
-  $('wordExample').textContent = item.example; $('wordCard').classList.remove('revealed');
+function renderPhrase() {
+  const item = phrases[index];
+  $('wordLevel').textContent = item.level;
+  $('wordPart').textContent = item.type;
+  $('wordTitle').textContent = item.phrase;
+  $('wordMeaning').textContent = item.meaning;
+  $('wordExample').textContent = item.example;
+  $('wordCard').classList.remove('revealed');
 }
+
 function renderProgress() {
-  $('learnedCount').textContent = learned.length; $('progressBar').style.width = `${Math.min(learned.length / 5 * 100, 100)}%`;
+  $('learnedCount').textContent = learned.length;
+  $('progressBar').style.width = `${Math.min(learned.length / 5 * 100, 100)}%`;
   $('collectionCount').textContent = learned.length;
-  $('wordList').innerHTML = learned.length ? learned.map(word => `<article><h3>${word.word}</h3><p>${word.meaning}</p></article>`).join('') : '<p class="empty">Здесь появятся слова, которые ты запомнил.</p>';
+  $('wordList').innerHTML = learned.length
+    ? learned.map(item => `<article><h3>${item.phrase}</h3><p>${item.meaning}</p></article>`).join('')
+    : '<p class="empty">Здесь появятся фразы, которые ты запомнил.</p>';
 }
-function nextWord() { index = (index + 1) % words.length; localStorage.setItem('vocab-index', index); renderWord(); }
+
+function nextPhrase() {
+  index = (index + 1) % phrases.length;
+  localStorage.setItem('phrase-index', index);
+  renderPhrase();
+}
 
 $('wordCard').addEventListener('click', () => $('wordCard').classList.add('revealed'));
-$('revealButton').addEventListener('click', e => { e.stopPropagation(); $('wordCard').classList.add('revealed'); });
-$('skipButton').addEventListener('click', nextWord);
-$('knowButton').addEventListener('click', () => { const item=words[index]; if(!learned.some(x=>x.word===item.word)) learned.push(item); localStorage.setItem('vocab-learned',JSON.stringify(learned)); renderProgress(); nextWord(); });
-$('soundButton').addEventListener('click', e => { e.stopPropagation(); if ('speechSynthesis' in window) { speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(words[index].word)); } });
+$('revealButton').addEventListener('click', event => { event.stopPropagation(); $('wordCard').classList.add('revealed'); });
+$('skipButton').addEventListener('click', nextPhrase);
+$('knowButton').addEventListener('click', () => {
+  const item = phrases[index];
+  if (!learned.some(saved => saved.phrase === item.phrase)) learned.push(item);
+  localStorage.setItem('phrase-learned', JSON.stringify(learned));
+  renderProgress();
+  nextPhrase();
+});
+$('soundButton').addEventListener('click', event => {
+  event.stopPropagation();
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(phrases[index].phrase);
+    speech.lang = 'ru-RU';
+    speechSynthesis.speak(speech);
+  }
+});
 
 document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
-  document.querySelectorAll('.tab,.screen').forEach(el => el.classList.remove('active'));
-  tab.classList.add('active'); $(tab.dataset.screen).classList.add('active');
+  document.querySelectorAll('.tab,.screen').forEach(element => element.classList.remove('active'));
+  tab.classList.add('active');
+  $(tab.dataset.screen).classList.add('active');
 }));
 
-const quiz = words[1];
-const options = ['Краткий и выразительный','Очень подробный','Скрытый и двусмысленный'];
+const options = ['Учитывать больше обстоятельств','Сосредоточиться на мелочах','Не менять своего мнения'];
 $('quizOptions').innerHTML = options.map(option => `<button class="quiz-option">${option}</button>`).join('');
 document.querySelectorAll('.quiz-option').forEach(button => button.addEventListener('click', () => {
-  document.querySelectorAll('.quiz-option').forEach(x => x.disabled=true);
-  const ok=button.textContent===options[0]; button.classList.add(ok?'correct':'wrong');
-  if(!ok) document.querySelectorAll('.quiz-option')[0].classList.add('correct');
-  $('quizFeedback').textContent=ok?'Верно! Отличное начало.':'Почти. Правильный ответ подсвечен.';
+  document.querySelectorAll('.quiz-option').forEach(option => { option.disabled = true; });
+  const isCorrect = button.textContent === options[0];
+  button.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) document.querySelectorAll('.quiz-option')[0].classList.add('correct');
+  $('quizFeedback').textContent = isCorrect ? 'Верно! Именно так.' : 'Почти. Правильный смысл подсвечен.';
 }));
 
-renderWord(); renderProgress();
+renderPhrase();
+renderProgress();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');

@@ -6,18 +6,18 @@
   <meta name="theme-color" content="#f4efe7">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Словарь">
+  <meta name="apple-mobile-web-app-title" content="Фраза">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="stylesheet" href="styles.css">
-  <title>Словарь — слово за словом</title>
+  <title>Фраза — выражайся точнее</title>
 </head>
 <body>
   <main class="app">
     <header class="topbar">
       <div>
-        <p class="eyebrow">слово за словом</p>
-        <h1>Твой словарь</h1>
+        <p class="eyebrow">выражайся точнее</p>
+        <h1>Фраза дня</h1>
       </div>
       <button class="streak" aria-label="Серия занятий"><span>●</span> <b id="streak">3</b></button>
     </header>
@@ -25,7 +25,7 @@
     <section class="progress-card">
       <div class="progress-copy">
         <span>Сегодня</span>
-        <strong><span id="learnedCount">0</span> из 5 слов</strong>
+        <strong><span id="learnedCount">0</span> из 5 фраз</strong>
       </div>
       <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
     </section>
@@ -33,17 +33,17 @@
     <nav class="tabs" aria-label="Разделы">
       <button class="tab active" data-screen="learn">Учить</button>
       <button class="tab" data-screen="quiz">Проверить</button>
-      <button class="tab" data-screen="collection">Словарь</button>
+      <button class="tab" data-screen="collection">Фразы</button>
     </nav>
 
     <section id="learn" class="screen active">
       <article id="wordCard" class="word-card">
-        <div class="card-topline"><span id="wordLevel">B2</span><button id="soundButton" class="icon-button" aria-label="Произнести слово">↗</button></div>
+        <div class="card-topline"><span id="wordLevel">B1</span><button id="soundButton" class="icon-button" aria-label="Произнести фразу">↗</button></div>
         <div class="word-copy">
-          <p id="wordPart">прилагательное</p>
-          <h2 id="wordTitle">Самобытный</h2>
-          <p id="wordMeaning" class="meaning">Своеобразный, идущий своим путём, не похожий на других.</p>
-          <p id="wordExample" class="example">«У режиссёра самобытный взгляд на знакомые истории».</p>
+          <p id="wordPart">устойчивое выражение</p>
+          <h2 id="wordTitle">Не откладывать в долгий ящик</h2>
+          <p id="wordMeaning" class="meaning">Не затягивать дело и взяться за него в ближайшее время.</p>
+          <p id="wordExample" class="example">«Давай не будем откладывать разговор в долгий ящик».</p>
         </div>
         <button id="revealButton" class="reveal-button">Показать значение</button>
       </article>
@@ -57,14 +57,14 @@
     <section id="quiz" class="screen">
       <div class="panel">
         <p class="eyebrow">быстрая проверка</p>
-        <h2 id="quizQuestion">Что значит «лаконичный»?</h2>
+        <h2 id="quizQuestion">Что значит «смотреть на вещи шире»?</h2>
         <div id="quizOptions" class="quiz-options"></div>
         <p id="quizFeedback" class="feedback" aria-live="polite"></p>
       </div>
     </section>
 
     <section id="collection" class="screen">
-      <div class="collection-head"><div><p class="eyebrow">твоя коллекция</p><h2>Изученные слова</h2></div><span id="collectionCount">0</span></div>
+      <div class="collection-head"><div><p class="eyebrow">твоя коллекция</p><h2>Изученные фразы</h2></div><span id="collectionCount">0</span></div>
       <div id="wordList" class="word-list"></div>
     </section>
   </main>
