@@ -160,6 +160,14 @@ $('wordCard').addEventListener('touchend', event => {
   nextPhrase(deltaX < 0 ? 'left' : 'right');
 }, { passive: true });
 
+$('wordCard').addEventListener('touchmove', event => {
+  if (!touchStart || event.touches.length !== 1) return;
+  const touch = event.touches[0];
+  const deltaX = touch.clientX - touchStart.x;
+  const deltaY = touch.clientY - touchStart.y;
+  if (Math.abs(deltaX) > 12 && Math.abs(deltaX) > Math.abs(deltaY)) event.preventDefault();
+}, { passive: false });
+
 $('wordCard').addEventListener('touchcancel', () => { touchStart = null; });
 $('wordCard').addEventListener('click', () => {
   if (suppressCardClick) {
